@@ -23,11 +23,7 @@ func main() {
 		fmt.Printf("error: %v\n", err)
 		return
 	}
-	fmt.Println(s)
 
-	fmt.Println("path:")
-	for _, p := range path {
-		fmt.Printf("(%v, %v) ", p.X, p.Y)
-	}
-	fmt.Println()
+	s.Draw()
+	fmt.Println("path: ", path)
 }

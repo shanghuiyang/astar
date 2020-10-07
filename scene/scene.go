@@ -65,3 +65,8 @@ func (s *Scene) String() string {
 	}
 	return str
 }
+
+// Draw ...
+func (s *Scene) Draw() {
+	fmt.Println(s)
+}
