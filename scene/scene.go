@@ -31,6 +31,26 @@ func New(r, c int) *Scene {
 	}
 }
 
+// BuildFromStr ...
+func BuildFromStr(str string) *Scene {
+	s := &Scene{}
+	cols := []byte{}
+	for _, c := range str {
+		if c == '\n' {
+			if len(cols) == 0 {
+				continue
+			}
+			s.s = append(s.s, cols)
+			s.r++
+			s.c = len(cols)
+			cols = []byte{}
+			continue
+		}
+		cols = append(cols, byte(c))
+	}
+	return s
+}
+
 // BuildFromGeoJSON ...
 func BuildFromGeoJSON(file string) *Scene {
 	return nil
