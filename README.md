@@ -1,4 +1,6 @@
 # A-Star
+[![Build Status](https://travis-ci.org/shanghuiyang/a-star.svg?branch=main)](https://travis-ci.org/shanghuiyang/a-star)
+
 A-Star algorithm implemented with Go.
 
 ## Usage
