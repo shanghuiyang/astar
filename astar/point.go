@@ -15,5 +15,5 @@ type Point struct {
 }
 
 func (p *Point) String() string {
-	return fmt.Sprintf("%v, %v, %v", p.X, p.Y, p.F)
+	return fmt.Sprintf("%v, %v", p.X, p.Y)
 }

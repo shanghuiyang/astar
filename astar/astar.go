@@ -17,9 +17,9 @@ var (
 type AStar struct {
 	origin    *Point
 	dest      *Point
-	openlist  List
-	closelist List
-	path      List
+	openlist  PList
+	closelist PList
+	path      PList
 	scene     *scene.Scene
 	baseScene *scene.Scene
 }
@@ -32,7 +32,7 @@ func New(s *scene.Scene) *AStar {
 }
 
 // FindPath ...
-func (a *AStar) FindPath(org, des *Point) (List, error) {
+func (a *AStar) FindPath(org, des *Point) (PList, error) {
 	a.scene = a.baseScene.Copy()
 	a.origin = org
 	a.dest = des
@@ -56,7 +56,7 @@ func (a *AStar) Draw() {
 	fmt.Print(a)
 }
 
-func (a *AStar) find() (List, error) {
+func (a *AStar) find() (PList, error) {
 	cur, err := a.minf()
 	if err != nil {
 		return nil, err
@@ -100,8 +100,8 @@ func (a *AStar) minf() (*Point, error) {
 	return min, nil
 }
 
-func (a *AStar) getWalkable(p *Point) List {
-	var around List
+func (a *AStar) getWalkable(p *Point) PList {
+	var around PList
 	row, col := p.X, p.Y
 	left := a.scene.Get(row, col-1)
 	up := a.scene.Get(row-1, col)

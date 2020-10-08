@@ -4,28 +4,28 @@ import (
 	"fmt"
 )
 
-// List ...
-type List []*Point
+// PList ...
+type PList []*Point
 
-// NewList ...
-func NewList(size int) List {
-	l := make(List, size)
+// NewPList ...
+func NewPList(size int) PList {
+	l := make(PList, size)
 	return l
 }
 
 // Append ...
-func (l *List) Append(p *Point) {
+func (l *PList) Append(p *Point) {
 	*l = append(*l, p)
 }
 
 // Front ...
-func (l *List) Front(p *Point) {
-	*l = append(List{p}, *l...)
+func (l *PList) Front(p *Point) {
+	*l = append(PList{p}, *l...)
 }
 
 // Remove ...
-func (l *List) Remove(p *Point) {
-	new := List{}
+func (l *PList) Remove(p *Point) {
+	new := PList{}
 	for _, pt := range *l {
 		if pt.X == p.X && pt.Y == p.Y {
 			continue
@@ -36,12 +36,12 @@ func (l *List) Remove(p *Point) {
 }
 
 // Clear ...
-func (l *List) Clear() {
+func (l *PList) Clear() {
 	*l = nil
 }
 
 // Find ...
-func (l *List) Find(p *Point) int {
+func (l *PList) Find(p *Point) int {
 	for i, pt := range *l {
 		if pt.X == p.X && pt.Y == p.Y {
 			return i
@@ -51,7 +51,7 @@ func (l *List) Find(p *Point) int {
 }
 
 // String ...
-func (l List) String() string {
+func (l PList) String() string {
 	var s string
 	for _, p := range l {
 		s += fmt.Sprintf("(%v, %v) ", p.X, p.Y)
