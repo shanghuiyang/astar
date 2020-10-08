@@ -35,6 +35,11 @@ func (l *List) Remove(p *Point) {
 	*l = new
 }
 
+// Clear ...
+func (l *List) Clear() {
+	*l = nil
+}
+
 // Find ...
 func (l *List) Find(p *Point) int {
 	for i, pt := range *l {

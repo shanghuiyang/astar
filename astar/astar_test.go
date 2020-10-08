@@ -134,18 +134,18 @@ func TestAStar(t *testing.T) {
 
 	for i, str := range scenes {
 		s := scene.BuildFromStr(str)
-		a := New(org, des, s)
-		_, err := a.Run()
+		a := New(s)
+		_, err := a.FindPath(org, des)
 		assert.NoError(t, err)
 
-		actual := "\n" + s.String()
+		actual := "\n" + a.String()
 		assert.Equal(t, expecteds[i], actual)
 	}
 
 	for _, str := range noWayScens {
 		s := scene.BuildFromStr(str)
-		a := New(org, des, s)
-		path, err := a.Run()
+		a := New(s)
+		path, err := a.FindPath(org, des)
 		assert.Error(t, err)
 		assert.Equal(t, ErrNoWay, err)
 		assert.Nil(t, path)

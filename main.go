@@ -21,16 +21,26 @@ func main() {
 	des := &astar.Point{X: 15, Y: 15}
 
 	// find the path using a-star algorithm
-	a := astar.New(org, des, s)
-	path, err := a.Run()
+	a := astar.New(s)
+	path, err := a.FindPath(org, des)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 		return
 	}
 
 	// draw the scene with the path
-	s.Draw()
-	fmt.Println("path: ", path)
+	a.Draw()
+	fmt.Printf("path: %v\n\n", path)
+
+	// find another path
+	org, des = des, org
+	path, err = a.FindPath(org, des)
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		return
+	}
+	a.Draw()
+	fmt.Printf("path: %v\n\n", path)
 
 	// or, build a scene map from a string
 	str := `
@@ -46,14 +56,13 @@ func main() {
 
 	org = &astar.Point{X: 2, Y: 2}
 	des = &astar.Point{X: 5, Y: 13}
-	a = astar.New(org, des, s)
-	path, err = a.Run()
+	a = astar.New(s)
+	path, err = a.FindPath(org, des)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 		return
 	}
-	fmt.Println()
-	s.Draw()
-	fmt.Println("path: ", path)
+	a.Draw()
+	fmt.Printf("path: %v\n\n", path)
 	return
 }

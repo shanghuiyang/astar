@@ -2,6 +2,7 @@ package astar
 
 import (
 	"errors"
+	"fmt"
 	"math"
 
 	"github.com/shanghuiyang/a-star/scene"
@@ -20,23 +21,42 @@ type AStar struct {
 	closelist List
 	path      List
 	scene     *scene.Scene
+	baseScene *scene.Scene
 }
 
 // New ...
-func New(org, des *Point, s *scene.Scene) *AStar {
-	a := &AStar{
-		origin: org,
-		dest:   des,
-		scene:  s,
+func New(s *scene.Scene) *AStar {
+	return &AStar{
+		baseScene: s,
 	}
-	s.Set(org.X, org.Y, 'A')
-	s.Set(des.X, des.Y, 'B')
-	a.openlist.Append(org)
-	return a
 }
 
-// Run ...
-func (a *AStar) Run() (List, error) {
+// FindPath ...
+func (a *AStar) FindPath(org, des *Point) (List, error) {
+	a.scene = a.baseScene.Copy()
+	a.origin = org
+	a.dest = des
+	a.scene.Set(org.X, org.Y, 'A')
+	a.scene.Set(des.X, des.Y, 'B')
+
+	a.openlist.Clear()
+	a.closelist.Clear()
+	a.path.Clear()
+	a.openlist.Append(org)
+	return a.find()
+}
+
+// String ...
+func (a *AStar) String() string {
+	return a.scene.String()
+}
+
+// Draw ...
+func (a *AStar) Draw() {
+	fmt.Print(a)
+}
+
+func (a *AStar) find() (List, error) {
 	cur, err := a.minf()
 	if err != nil {
 		return nil, err
@@ -64,7 +84,7 @@ func (a *AStar) Run() (List, error) {
 		}
 		a.openlist.Append(p)
 	}
-	return a.Run()
+	return a.find()
 }
 
 func (a *AStar) minf() (*Point, error) {

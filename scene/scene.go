@@ -66,6 +66,16 @@ func (s *Scene) Set(r, c int, ctx byte) {
 	s.s[r][c] = ctx
 }
 
+// GetRow ...
+func (s *Scene) GetRow() int {
+	return s.r
+}
+
+// GetCol ...
+func (s *Scene) GetCol() int {
+	return s.c
+}
+
 // SetWall ...
 func (s *Scene) SetWall(r, c int) {
 	if r < 0 || r > s.r || c < 0 || c > s.c {
@@ -88,5 +98,21 @@ func (s *Scene) String() string {
 
 // Draw ...
 func (s *Scene) Draw() {
-	fmt.Println(s)
+	fmt.Print(s)
+}
+
+// Copy ...
+func (s *Scene) Copy() *Scene {
+	ss := make([][]byte, s.r)
+	for i := 0; i < s.r; i++ {
+		ss[i] = make([]byte, s.c)
+		for j := 0; j < s.c; j++ {
+			ss[i][j] = s.s[i][j]
+		}
+	}
+	return &Scene{
+		r: s.r,
+		c: s.c,
+		s: ss,
+	}
 }

@@ -42,6 +42,15 @@ func TestRemove(t *testing.T) {
 	assert.Equal(t, List{p1}, l)
 }
 
+func TestClear(t *testing.T) {
+	p1 := &Point{X: 1, Y: 1}
+	p2 := &Point{X: 2, Y: 2}
+	l := List{p1, p2}
+
+	l.Clear()
+	assert.Equal(t, 0, len(l))
+}
+
 func TestFind(t *testing.T) {
 	p1 := &Point{X: 1, Y: 1}
 	p2 := &Point{X: 2, Y: 2}
