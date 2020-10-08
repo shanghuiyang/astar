@@ -2,33 +2,31 @@
 A-Star algorithm implemented with Go.
 
 ## Usage
-build a scene map first.
+see the [main.go](/main.go) for complete usage.
 ```go
-    // build a scene map directly
-    r, c := 20, 20
+package main
+
+import (
+	"fmt"
+
+	"github.com/shanghuiyang/a-star/astar"
+	"github.com/shanghuiyang/a-star/scene"
+)
+
+func main() {
+
+	// build a scene map with walls
+	r, c := 20, 20
 	s := scene.New(r, c)
 	for i := 4; i < 13; i++ {
 		s.SetWall(9, i)
-    }
-    
-    // or, build from string
-    str := `
-################
-#              #
-#      #       #
-#      #       #
-#      #       #
-#      #       #
-################
-`
-	s = scene.BuildFromStr(str)
-```
+	}
 
-find the path using a-star
-```go
-	org := &astar.Point{X: 3, Y: 3}     // origin
-	des := &astar.Point{X: 15, Y: 15}   // destination
+	// define the origin and destination
+	org := &astar.Point{X: 3, Y: 3}
+	des := &astar.Point{X: 15, Y: 15}
 
+	// find the path using a-star algorithm
 	a := astar.New(org, des, s)
 	path, err := a.Run()
 	if err != nil {
@@ -36,7 +34,8 @@ find the path using a-star
 		return
 	}
 
-    s.Draw()
+	// draw the scene with the path
+	s.Draw()
     fmt.Println("path: ", path)
     //
     // ####################
@@ -60,9 +59,42 @@ find the path using a-star
     // #                  #
     // ####################
 	//
-```
 
-see the [main.go](/main.go) for complete usage.
+	// or, build a scene map from a string
+	str := `
+################
+#              #
+#      #       #
+#      #       #
+#      #       #
+#      #       #
+################
+`
+	s = scene.BuildFromStr(str)
+
+	org = &astar.Point{X: 2, Y: 2}
+	des = &astar.Point{X: 5, Y: 13}
+	a = astar.New(org, des, s)
+	path, err = a.Run()
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		return
+	}
+	fmt.Println()
+	s.Draw()
+    fmt.Println("path: ", path)
+    //
+    // ################
+    // #     **       #
+    // # A  * #*      #
+    // #  **  # *     #
+    // #      #  *    #
+    // #      #   **B #
+    // ################
+    //
+	return
+}
+```
 
 ## More Cases
 ```
