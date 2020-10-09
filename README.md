@@ -6,25 +6,25 @@ A-Star algorithm implemented with Go.
 ## Usage
 see the [main.go](/main.go) for complete usage.
 
-build a scene map.
+build a tilemap.
 ```go
 package main
 
 import (
 	"fmt"
 
-	"github.com/shanghuiyang/a-star/scene"
+	"github.com/shanghuiyang/a-star/tilemap"
 )
 
 func main() {
 
 	// build a scene map with walls
 	r, c := 20, 20
-	s := scene.New(r, c)
-	for i := 4; i < 13; i++ {
-		s.SetWall(9, i)
+	m := tilemap.New(r, c)
+	for x := 4; x < 13; x++ {
+		m.SetWall(9, x)
 	}
-	s.Draw()
+	m.Draw()
 	//
 	// ####################
 	// #                  #
@@ -59,8 +59,8 @@ func main() {
 #      #       #
 ################
 `
-	s = scene.BuildFromStr(str)
-	s.Draw()
+	m = tilemap.BuildFromStr(str)
+	m.Draw()
 	//
  	// ################
 	// #              #
@@ -75,7 +75,7 @@ func main() {
 ```
 
 
-find a path using the scene map.
+find a path using the tilemap.
 ```go
 package main
 
@@ -83,19 +83,19 @@ import (
 	"fmt"
 
 	"github.com/shanghuiyang/a-star/astar"
-	"github.com/shanghuiyang/a-star/scene"
+	"github.com/shanghuiyang/a-star/tilemap"
 )
 
 func main() {
 	r, c := 20, 20
-	s := scene.New(r, c)
-	for i := 4; i < 13; i++ {
-		s.SetWall(9, i)
+	m := tilemap.New(r, c)
+	for x := 4; x < 13; x++ {
+		m.SetWall(9, x)
 	}
 
 	org := &astar.Point{X: 3, Y: 3}		// origin
 	des := &astar.Point{X: 15, Y: 15}	// destination
-	a := astar.New(s)
+	a := astar.New(m)
 	path, err := a.FindPath(org, des)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)

@@ -2,14 +2,13 @@ package astar
 
 import (
 	"testing"
-	// "fmt"
 
-	"github.com/shanghuiyang/a-star/scene"
+	"github.com/shanghuiyang/a-star/tilemap"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	scenes = []string{
+	tilemaps = []string{
 		`
 ################
 #              #
@@ -132,9 +131,9 @@ func TestAStar(t *testing.T) {
 	org := &Point{X: 2, Y: 2}
 	des := &Point{X: 5, Y: 13}
 
-	for i, str := range scenes {
-		s := scene.BuildFromStr(str)
-		a := New(s)
+	for i, str := range tilemaps {
+		m := tilemap.BuildFromStr(str)
+		a := New(m)
 		_, err := a.FindPath(org, des)
 		assert.NoError(t, err)
 
@@ -143,8 +142,8 @@ func TestAStar(t *testing.T) {
 	}
 
 	for _, str := range noWayScens {
-		s := scene.BuildFromStr(str)
-		a := New(s)
+		m := tilemap.BuildFromStr(str)
+		a := New(m)
 		path, err := a.FindPath(org, des)
 		assert.Error(t, err)
 		assert.Equal(t, ErrNoWay, err)

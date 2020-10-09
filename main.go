@@ -4,16 +4,16 @@ import (
 	"fmt"
 
 	"github.com/shanghuiyang/a-star/astar"
-	"github.com/shanghuiyang/a-star/scene"
+	"github.com/shanghuiyang/a-star/tilemap"
 )
 
 func main() {
 
-	// build a scene map with walls
+	// build a tilemap with walls
 	r, c := 20, 20
-	s := scene.New(r, c)
-	for i := 4; i < 13; i++ {
-		s.SetWall(9, i)
+	m := tilemap.New(r, c)
+	for x := 4; x < 13; x++ {
+		m.SetWall(9, x)
 	}
 
 	// define the origin and destination
@@ -21,14 +21,14 @@ func main() {
 	des := &astar.Point{X: 15, Y: 15}
 
 	// find the path using a-star algorithm
-	a := astar.New(s)
+	a := astar.New(m)
 	path, err := a.FindPath(org, des)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 		return
 	}
 
-	// draw the scene with the path
+	// draw the tilemap with the path
 	a.Draw()
 	fmt.Printf("path: %v\n\n", path)
 
@@ -42,7 +42,7 @@ func main() {
 	a.Draw()
 	fmt.Printf("path: %v\n\n", path)
 
-	// or, build a scene map from a string
+	// or, build a tilemap from string
 	str := `
 ################
 #              #
@@ -52,11 +52,11 @@ func main() {
 #      #       #
 ################
 `
-	s = scene.BuildFromStr(str)
+	m = tilemap.BuildFromStr(str)
 
 	org = &astar.Point{X: 2, Y: 2}
 	des = &astar.Point{X: 5, Y: 13}
-	a = astar.New(s)
+	a = astar.New(m)
 	path, err = a.FindPath(org, des)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)

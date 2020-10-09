@@ -2,10 +2,9 @@ package astar
 
 import (
 	"errors"
-	"fmt"
 	"math"
 
-	"github.com/shanghuiyang/a-star/scene"
+	"github.com/shanghuiyang/a-star/tilemap"
 )
 
 var (
@@ -15,32 +14,32 @@ var (
 
 // AStar ...
 type AStar struct {
-	origin    *Point
-	dest      *Point
-	openlist  PList
-	closelist PList
-	path      PList
-	scene     *scene.Scene
-	baseScene *scene.Scene
+	origin      *Point
+	dest        *Point
+	openlist    PList
+	closedlist  PList
+	path        PList
+	tilemap     *tilemap.Tilemap
+	baseTilemap *tilemap.Tilemap
 }
 
 // New ...
-func New(s *scene.Scene) *AStar {
+func New(m *tilemap.Tilemap) *AStar {
 	return &AStar{
-		baseScene: s,
+		baseTilemap: m,
 	}
 }
 
 // FindPath ...
 func (a *AStar) FindPath(org, des *Point) (PList, error) {
-	a.scene = a.baseScene.Copy()
+	a.tilemap = a.baseTilemap.Clone()
 	a.origin = org
 	a.dest = des
-	a.scene.Set(org.X, org.Y, 'A')
-	a.scene.Set(des.X, des.Y, 'B')
+	a.tilemap.Set(org.X, org.Y, 'A')
+	a.tilemap.Set(des.X, des.Y, 'B')
 
 	a.openlist.Clear()
-	a.closelist.Clear()
+	a.closedlist.Clear()
 	a.path.Clear()
 	a.openlist.Append(org)
 	return a.find()
@@ -48,12 +47,12 @@ func (a *AStar) FindPath(org, des *Point) (PList, error) {
 
 // String ...
 func (a *AStar) String() string {
-	return a.scene.String()
+	return a.tilemap.String()
 }
 
 // Draw ...
 func (a *AStar) Draw() {
-	fmt.Print(a)
+	a.tilemap.Draw()
 }
 
 func (a *AStar) find() (PList, error) {
@@ -68,11 +67,11 @@ func (a *AStar) find() (PList, error) {
 		return a.path, nil
 	}
 
-	a.closelist.Append(cur)
+	a.closedlist.Append(cur)
 	walkable := a.getWalkable(cur)
 	for _, p := range walkable {
 		a.updateWeight(p)
-		if a.closelist.Find(p) >= 0 {
+		if a.closedlist.Find(p) >= 0 {
 			continue
 		}
 
@@ -102,38 +101,38 @@ func (a *AStar) minf() (*Point, error) {
 
 func (a *AStar) getWalkable(p *Point) PList {
 	var around PList
-	row, col := p.X, p.Y
-	left := a.scene.Get(row, col-1)
-	up := a.scene.Get(row-1, col)
-	right := a.scene.Get(row, col+1)
-	down := a.scene.Get(row+1, col)
-	leftup := a.scene.Get(row-1, col-1)
-	rightup := a.scene.Get(row-1, col+1)
-	leftdown := a.scene.Get(row+1, col-1)
-	rightdown := a.scene.Get(row+1, col+1)
+	x, y := p.X, p.Y
+	left := a.tilemap.Get(x, y-1)
+	up := a.tilemap.Get(x-1, y)
+	right := a.tilemap.Get(x, y+1)
+	down := a.tilemap.Get(x+1, y)
+	leftup := a.tilemap.Get(x-1, y-1)
+	rightup := a.tilemap.Get(x-1, y+1)
+	leftdown := a.tilemap.Get(x+1, y-1)
+	rightdown := a.tilemap.Get(x+1, y+1)
 	if (left == ' ') || (left == 'B') {
-		around.Append(&Point{row, col - 1, 0, 0, 0, p})
+		around.Append(&Point{x, y - 1, 0, 0, 0, p})
 	}
 	if (leftup == ' ') || (leftup == 'B') {
-		around.Append(&Point{row - 1, col - 1, 0, 0, 0, p})
+		around.Append(&Point{x - 1, y - 1, 0, 0, 0, p})
 	}
 	if (up == ' ') || (up == 'B') {
-		around.Append(&Point{row - 1, col, 0, 0, 0, p})
+		around.Append(&Point{x - 1, y, 0, 0, 0, p})
 	}
 	if (rightup == ' ') || (rightup == 'B') {
-		around.Append(&Point{row - 1, col + 1, 0, 0, 0, p})
+		around.Append(&Point{x - 1, y + 1, 0, 0, 0, p})
 	}
 	if (right == ' ') || (right == 'B') {
-		around.Append(&Point{row, col + 1, 0, 0, 0, p})
+		around.Append(&Point{x, y + 1, 0, 0, 0, p})
 	}
 	if (rightdown == ' ') || (rightdown == 'B') {
-		around.Append(&Point{row + 1, col + 1, 0, 0, 0, p})
+		around.Append(&Point{x + 1, y + 1, 0, 0, 0, p})
 	}
 	if (down == ' ') || (down == 'B') {
-		around.Append(&Point{row + 1, col, 0, 0, 0, p})
+		around.Append(&Point{x + 1, y, 0, 0, 0, p})
 	}
 	if (leftdown == ' ') || (leftdown == 'B') {
-		around.Append(&Point{row + 1, col - 1, 0, 0, 0, p})
+		around.Append(&Point{x + 1, y - 1, 0, 0, 0, p})
 	}
 	return around
 }
@@ -158,8 +157,8 @@ func (a *AStar) checkPos(p *Point) int {
 }
 
 func (a *AStar) genPath(p *Point) {
-	if a.scene.Get(p.X, p.Y) != 'A' && a.scene.Get(p.X, p.Y) != 'B' {
-		a.scene.Set(p.X, p.Y, '*')
+	if a.tilemap.Get(p.X, p.Y) != 'A' && a.tilemap.Get(p.X, p.Y) != 'B' {
+		a.tilemap.Set(p.X, p.Y, '*')
 	}
 	a.path.Front(p)
 	if p.Parent != nil {
