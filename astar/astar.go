@@ -158,7 +158,7 @@ func (a *AStar) checkPos(p *Point) int {
 
 func (a *AStar) genPath(p *Point) {
 	if a.tilemap.Get(p.X, p.Y) != 'A' && a.tilemap.Get(p.X, p.Y) != 'B' {
-		a.tilemap.Set(p.X, p.Y, '*')
+		a.tilemap.Set(p.X, p.Y, '.')
 	}
 	a.path.Front(p)
 	if p.Parent != nil {
