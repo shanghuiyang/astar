@@ -1,3 +1,5 @@
+<img src="a-star.gif" width=20% height=20% />
+
 # A-Star
 [![Build Status](https://travis-ci.org/shanghuiyang/a-star.svg?branch=main)](https://travis-ci.org/shanghuiyang/a-star)
 
