@@ -31,38 +31,5 @@ func main() {
 	// draw the tilemap with the path
 	a.Draw()
 	fmt.Printf("path: %v\n\n", path)
-
-	// find another path
-	org, des = des, org
-	path, err = a.FindPath(org, des)
-	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		return
-	}
-	a.Draw()
-	fmt.Printf("path: %v\n\n", path)
-
-	// or, build a tilemap from string
-	str := `
-################
-#              #
-#      #       #
-#      #       #
-#      #       #
-#      #       #
-################
-`
-	m = tilemap.BuildFromStr(str)
-
-	org = &astar.Point{X: 2, Y: 2}
-	des = &astar.Point{X: 5, Y: 13}
-	a = astar.New(m)
-	path, err = a.FindPath(org, des)
-	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		return
-	}
-	a.Draw()
-	fmt.Printf("path: %v\n\n", path)
 	return
 }

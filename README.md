@@ -7,77 +7,6 @@ A-Star algorithm implemented with Go.
 
 ## Usage
 see the [main.go](/main.go) for complete usage.
-
-build a tilemap.
-```go
-package main
-
-import (
-	"fmt"
-
-	"github.com/shanghuiyang/a-star/tilemap"
-)
-
-func main() {
-
-	// build a scene map with walls
-	r, c := 20, 20
-	m := tilemap.New(r, c)
-	for x := 4; x < 13; x++ {
-		m.SetWall(9, x)
-	}
-	m.Draw()
-	//
-	// ####################
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #   #########      #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// #                  #
-	// ####################
-	//
-
-
-	// or, build a scene map from a string
-	str := `
-################
-#              #
-#      #       #
-#      #       #
-#      #       #
-#      #       #
-################
-`
-	m = tilemap.BuildFromStr(str)
-	m.Draw()
-	//
- 	// ################
-	// #              #
-	// #      #       #
-	// #      #       #
-	// #      #       #
-	// #      #       #
-	// ################
-	//
-	return
-}
-```
-
-
-find a path using the tilemap.
 ```go
 package main
 
@@ -125,38 +54,7 @@ func main() {
 	// #                  #
 	// #                  #
 	// ####################
-	//
-
-	// swap origin and destination, find another path
-	org, des = des, org
-	path, err = a.FindPath(org, des)
-	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		return
-	}
-	a.Draw()
-	//
-	// ####################
-	// #                  #
-	// #                  #
-	// #  B               #
-	// #  .               #
-	// #  .               #
-	// #  .               #
-	// #  .               #
-	// #  .               #
-	// #  .#########      #
-	// #   .......        #
-	// #          .       #
-	// #           .      #
-	// #            .     #
-	// #             .    #
-	// #              A   #
-	// #                  #
-	// #                  #
-	// #                  #
-	// ####################
-	//
+	// 
 	return
 }
 ```
