@@ -3,7 +3,7 @@ package astar
 import (
 	"testing"
 
-	"github.com/shanghuiyang/a-star/tilemap"
+	"github.com/shanghuiyang/astar/tilemap"
 	"github.com/stretchr/testify/assert"
 )
 

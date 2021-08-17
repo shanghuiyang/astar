@@ -1,20 +1,20 @@
 <img src="a-star.gif" width=20% height=20% />
 
 # A-Star
-[![Build Status](https://travis-ci.org/shanghuiyang/a-star.svg?branch=main)](https://travis-ci.org/shanghuiyang/a-star)
+[![Build Status](https://travis-ci.org/shanghuiyang/astar.svg?branch=main)](https://travis-ci.org/shanghuiyang/astar)
 
 A-Star algorithm implemented with Go.
 
 ## Usage
-see the [main.go](/main.go) for complete usage.
+see the [example/main.go](example/main.go) for complete usage.
 ```go
 package main
 
 import (
 	"fmt"
 
-	"github.com/shanghuiyang/a-star/astar"
-	"github.com/shanghuiyang/a-star/tilemap"
+	"github.com/shanghuiyang/astar"
+	"github.com/shanghuiyang/astar/tilemap"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"math"
 
-	"github.com/shanghuiyang/a-star/tilemap"
+	"github.com/shanghuiyang/astar/tilemap"
 )
 
 var (

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/shanghuiyang/a-star/astar"
-	"github.com/shanghuiyang/a-star/tilemap"
+	"github.com/shanghuiyang/astar"
+	"github.com/shanghuiyang/astar/tilemap"
 )
 
 func main() {
