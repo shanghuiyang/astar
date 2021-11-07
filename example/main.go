@@ -7,18 +7,27 @@ import (
 	"github.com/shanghuiyang/astar/tilemap"
 )
 
-func main() {
+// a map with 10 rows and 20 cols
+const strmap = `
+####################
+#                  #
+#                  #
+#   #########      #
+#                  #
+#        #######   #
+#                  #
+#                  #
+#                  #
+####################
+`
 
-	// build a tilemap with walls
-	r, c := 20, 20
-	m := tilemap.New(r, c)
-	for x := 4; x < 13; x++ {
-		m.SetWall(9, x)
-	}
+func main() {
+	// build a map from string
+	m := tilemap.BuildFromStr(strmap)
 
 	// define the origin and destination
-	org := &astar.Point{X: 3, Y: 3}
-	des := &astar.Point{X: 15, Y: 15}
+	org := &astar.Point{X: 7, Y: 2}
+	des := &astar.Point{X: 1, Y: 16}
 
 	// find the path using a-star algorithm
 	a := astar.New(m)
@@ -31,5 +40,4 @@ func main() {
 	// draw the tilemap with the path
 	a.Draw()
 	fmt.Printf("path: %v\n\n", path)
-	return
 }

@@ -11,52 +11,61 @@ see the [example/main.go](example/main.go) for complete usage.
 package main
 
 import (
-	"fmt"
+    "fmt"
 
-	"github.com/shanghuiyang/astar"
-	"github.com/shanghuiyang/astar/tilemap"
+    "github.com/shanghuiyang/astar"
+    "github.com/shanghuiyang/astar/tilemap"
 )
 
-func main() {
-	r, c := 20, 20
-	m := tilemap.New(r, c)
-	for x := 4; x < 13; x++ {
-		m.SetWall(9, x)
-	}
+// a map with 10 rows and 20 cols
+const strmap = `
+####################
+#                  #
+#                  #
+#   #########      #
+#                  #
+#        #######   #
+#                  #
+#                  #
+#                  #
+####################
+`
 
-	org := &astar.Point{X: 3, Y: 3}		// origin
-	des := &astar.Point{X: 15, Y: 15}	// destination
-	a := astar.New(m)
-	path, err := a.FindPath(org, des)
-	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		return
-	}
-	a.Draw()
-	//
-	// ####################
-	// #                  #
-	// #                  #
-	// #  A               #
-	// #   .              #
-	// #    .             #
-	// #     .            #
-	// #      .           #
-	// #       .....      #
-	// #   #########.     #
-	// #             .    #
-	// #              .   #
-	// #              .   #
-	// #              .   #
-	// #              .   #
-	// #              B   #
-	// #                  #
-	// #                  #
-	// #                  #
-	// ####################
-	// 
-	return
+func main() {
+    // build a map from string
+    m := tilemap.BuildFromStr(strmap)
+
+    // define the origin and destination
+    org := &astar.Point{X: 7, Y: 2}
+    des := &astar.Point{X: 1, Y: 16}
+
+    // find the path using a-star algorithm
+    a := astar.New(m)
+    path, err := a.FindPath(org, des)
+    if err != nil {
+        fmt.Printf("error: %v\n", err)
+        return
+    }
+
+    // draw the tilemap with the path
+    a.Draw()
+    fmt.Printf("path: %v\n\n", path)
 }
+```
+
+output,
+```
+####################
+#              .B  #
+#             .    #
+#   #########.     #
+#    ........      #
+#   .    #######   #
+#  .               #
+# A                #
+#                  #
+####################
+path: (7, 2) (6, 3) (5, 4) (4, 5) (4, 6) (4, 7) (4, 8) (4, 9) (4, 10) (4, 11) (4, 12) (3, 13) (2, 14) (1, 15) (1, 16)
 ```
 
 ## More Cases

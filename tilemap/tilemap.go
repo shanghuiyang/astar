@@ -1,3 +1,12 @@
+// the coordinate system of a tilemap
+//
+//  0 +-----------> y
+//    |
+//    |
+//    |
+//    v
+//    x
+//
 package tilemap
 
 import (
@@ -91,7 +100,7 @@ func (m *Tilemap) String() string {
 		for y := 0; y < m.c; y++ {
 			s += fmt.Sprintf("%c", m.data[x][y])
 		}
-		s += fmt.Sprintf("\n")
+		s += "\n"
 	}
 	return s
 }
