@@ -1,7 +1,7 @@
 <img src="a-star.gif" width=20% height=20% />
 
 # A-Star
-[![Build Status](https://travis-ci.org/shanghuiyang/astar.svg?branch=main)](https://travis-ci.org/shanghuiyang/astar)
+![example workflow](https://github.com/shanghuiyang/astar/actions/workflows/ci.yml/badge.svg)
 
 A-Star algorithm implemented with Go.
 
