@@ -1,7 +1,8 @@
 <img src="a-star.gif" width=20% height=20% />
 
 # A-Star
-[![Build status](https://github.com/shanghuiyang/astar/workflows/CI/badge.svg)](https://github.com/shanghuiyang/astar/actions)
+[![CI](https://github.com/shanghuiyang/astar/actions/workflows/ci.yml/badge.svg)](https://github.com/shanghuiyang/astar/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/shanghuiyang/astar/blob/master/LICENSE)
 
 A-Star algorithm implemented with Go.
 
